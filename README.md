@@ -128,7 +128,12 @@ To balance classification accuracy with the logic and BRAM constraints of the Cy
 ## 10. INT8 Quantization
 Executing `FP32` arithmetic on FPGA fabric consumes excessive DSP slices and logic elements (ALMs). This project applies **Symmetric Post-Training Quantization (PTQ)** to map floating-point weights $W_{fp32}$ and activations into 8-bit signed integers $W_{int8} \in [-128, 127]$:
 
-$$S_w = rac{127}{\max(|W_{fp32}|)}, \quad W_{int8} = 	ext{clip}\left(	ext{round}(W_{fp32} \cdot S_w), -128, 127ight)$$
+$$S_w = \frac{127}{\max(|W_{fp32}|)}, \quad W_{int8} = \text{clip}\left(\text{round}(W_{fp32} \cdot S_w), -128, 127\right)$$
+
+During hardware inference (`relu_quant.v`), 32-bit partial sums from the MAC array are rescaled back to `INT8` using hardware-efficient arithmetic bit-shifts (`>>> SHIFT_BITS`) followed by clamping at `127`, eliminating floating-point division hardware.
+
+$$S_w = rac{127}{\max(|W_{fp32}|)}, \quad W_{int8} = 	ext{clip}\left(	ext{round}(W_{fp32} \cdot S_w), -128, 127
+ight)$$
 
 During hardware inference (`relu_quant.v`), 32-bit partial sums from the MAC array are rescaled back to `INT8` using hardware-efficient arithmetic bit-shifts (`>>> SHIFT_BITS`) followed by clamping at `127`, eliminating floating-point division hardware.
 
