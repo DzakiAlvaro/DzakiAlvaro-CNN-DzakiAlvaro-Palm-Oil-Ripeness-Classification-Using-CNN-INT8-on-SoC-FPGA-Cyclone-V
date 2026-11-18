@@ -132,13 +132,6 @@ $$S_w = \frac{127}{\max(|W_{fp32}|)}, \quad W_{int8} = \text{clip}\left(\text{ro
 
 During hardware inference (`relu_quant.v`), 32-bit partial sums from the MAC array are rescaled back to `INT8` using hardware-efficient arithmetic bit-shifts (`>>> SHIFT_BITS`) followed by clamping at `127`, eliminating floating-point division hardware.
 
-$$S_w = rac{127}{\max(|W_{fp32}|)}, \quad W_{int8} = 	ext{clip}\left(	ext{round}(W_{fp32} \cdot S_w), -128, 127
-ight)$$
-
-During hardware inference (`relu_quant.v`), 32-bit partial sums from the MAC array are rescaled back to `INT8` using hardware-efficient arithmetic bit-shifts (`>>> SHIFT_BITS`) followed by clamping at `127`, eliminating floating-point division hardware.
-
----
-
 ## 11. FPGA Implementation
 The RTL design is structured for clean synthesis in **Intel Quartus Prime** targeting the **Cyclone V SoC**:
 - **DSP Utilization:** `conv2d_int8.v` maps `8-bit × 8-bit` multiplications directly onto Cyclone V **Variable-Precision DSP blocks**, enabling single-cycle parallel accumulation across all three RGB channels.
