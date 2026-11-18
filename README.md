@@ -5,6 +5,8 @@
 ![Precision](https://img.shields.io/badge/Quantization-8--bit_Integer_(INT8)-green)
 ![Input](https://img.shields.io/badge/Input-32x32_RGB_(JPG%2FPNG)-orange)
 
+Dzaki Andryara Alvaro
+101022300060
 ---
 
 ## 1. Project Overview
